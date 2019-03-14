@@ -1,9 +1,16 @@
 import styled from "styled-components/macro";
+import { Link } from "react-router-dom";
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  width: inherit;
+`;
 
 export const Container = styled.div`
   box-sizing: border-box;
   color: #fff;
-  background-color: #3b3d49;
+  background: linear-gradient(to bottom, #434552, #242430);
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -11,6 +18,12 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 18px;
+`;
+
+export const WideContainer = styled(Container)`
+  width: unset;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
 
 export const Wrapper = styled.div`
@@ -46,6 +59,15 @@ export const StyledItem = styled(StyledList)`
   border-radius: 6px;
 `;
 
+export const GraphicsItem = styled(StyledItem)`
+  border: 1px solid #42424e;
+  background: none;
+
+  &:active {
+    background-color: #42424e;
+  }
+`;
+
 export const ItemPart = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -69,7 +91,7 @@ export const GeneralLine = styled.div`
 
 export const FadedLine = styled(GeneralLine)`
   color: #a9abb7;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export const Icon = styled.div`
@@ -106,4 +128,11 @@ export const PositiveText = styled.div`
 
 export const NegativeText = styled.div`
   color: #ff7779;
+`;
+
+export const GraphicsCurrencies = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
 `;

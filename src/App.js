@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import List from "./components/List";
-import PersonalInfo from "./components/PersonalInfo";
-import { Container } from "./styled";
+import { BrowserRouter as Router } from "react-router-dom";
+import MainPage from "./components/MainPage";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faSearch,
@@ -16,10 +15,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Container>
-          <PersonalInfo />
-          <List />
-        </Container>
+        <Router>
+          <MainPage />
+        </Router>
       </div>
     );
   }

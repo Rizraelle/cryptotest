@@ -5,11 +5,13 @@ import {
   ItemPart,
   GeneralLine,
   FadedLine,
-  IconBTC
+  IconBTC,
+  PositiveText
 } from "../styled";
 
 class Item extends Component {
   render() {
+    const { shortName, fullName, quantity, price } = this.props;
     return (
       <StyledItem>
         <ItemPart>
@@ -18,12 +20,12 @@ class Item extends Component {
           </IconBTC>
           <Wrapper>
             <GeneralLine>
-              <div>BTC</div>
-              <div>0.241234523</div>
+              <div>{shortName}</div>
+              <div>{quantity}</div>
             </GeneralLine>
             <FadedLine>
-              <div>Bitcoin</div>
-              <div>$1,238.62</div>
+              <div>{fullName}</div>
+              <div>${price}</div>
             </FadedLine>
           </Wrapper>
         </ItemPart>
@@ -31,11 +33,11 @@ class Item extends Component {
           <Wrapper>
             <GeneralLine>
               <div>BTC</div>
-              <div>0.241234523</div>
+              <PositiveText>+ 2.456</PositiveText>
             </GeneralLine>
             <FadedLine>
-              <div>Bitcoin</div>
-              <div>$1,238.62</div>
+              <div>Price</div>
+              <div>Profit / Loss</div>
             </FadedLine>
           </Wrapper>
         </ItemPart>

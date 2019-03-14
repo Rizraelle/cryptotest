@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Wrapper,
   Icon,
@@ -12,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class PersonalInfo extends Component {
   render() {
+    const { totalBalance } = this.props;
     return (
       <Wrapper>
         <GeneralLine>
@@ -26,7 +28,7 @@ class PersonalInfo extends Component {
           Your total balance
           <TotalBalance>
             <TotalBalanceCurrency>$</TotalBalanceCurrency>
-            1,632.95
+            {totalBalance}
           </TotalBalance>
         </BalanceWrapper>
         <BalanceWrapper>
@@ -41,4 +43,16 @@ class PersonalInfo extends Component {
   }
 }
 
-export default PersonalInfo;
+export default connect(
+  ({ currencies }) => {
+    const totalBalance = Object.values(currencies).reduce(
+      (accumulator, currentValue) => {
+        const { price, quantity } = currentValue;
+        return Math.floor(price * quantity + accumulator);
+      },
+      0
+    );
+    return { totalBalance };
+  },
+  null
+)(PersonalInfo);
