@@ -5,6 +5,7 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   width: inherit;
+  margin-bottom: 20px;
 `;
 
 export const Container = styled.div`
@@ -53,18 +54,19 @@ export const StyledList = styled.div`
 
 export const StyledItem = styled(StyledList)`
   padding: 5px 15px;
-  margin-bottom: 20px;
   box-sizing: border-box;
   background-color: #42424e;
   border-radius: 6px;
 `;
 
 export const GraphicsItem = styled(StyledItem)`
-  border: 1px solid #42424e;
+  border: 1px solid #4b4d59;
   background: none;
+  max-width: 250px;
+  margin: 10px;
 
   &:active {
-    background-color: #42424e;
+    background-color: #4b4d59;
   }
 `;
 

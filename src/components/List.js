@@ -22,8 +22,8 @@ class List extends Component {
     return (
       <StyledList>
         {Object.values(currencies).map(currency => (
-          <StyledLink to={`/${currency.shortName}`}>
-            <Item {...currency} key={currency.shortName} />
+          <StyledLink to={`/${currency.shortName}`} key={currency.shortName}>
+            <Item {...currency} />
           </StyledLink>
         ))}
       </StyledList>
