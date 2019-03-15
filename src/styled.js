@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
+import { AreaChart } from "recharts";
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -22,7 +23,6 @@ export const Container = styled.div`
 `;
 
 export const WideContainer = styled(Container)`
-  width: unset;
   align-items: flex-start;
   justify-content: flex-start;
 `;
@@ -59,15 +59,15 @@ export const StyledItem = styled(StyledList)`
   border-radius: 6px;
 `;
 
-export const GraphicsItem = styled(StyledItem)`
+export const StyledGraphicsItem = styled(StyledItem)`
+  padding: 0 10px;
   border: 1px solid #4b4d59;
   background: none;
-  max-width: 250px;
+  max-width: 220px;
+  min-width: 220px;
   margin: 10px;
-
-  &:active {
-    background-color: #4b4d59;
-  }
+  background: ${({ shortName, pathname }) =>
+    pathname.includes(shortName) && "#4b4d59"};
 `;
 
 export const ItemPart = styled.div`
@@ -98,6 +98,7 @@ export const FadedLine = styled(GeneralLine)`
 
 export const Icon = styled.div`
   box-sizing: border-box;
+  width: 40px;
   min-width: 40px;
   height: 40px;
   padding: 6px;
@@ -137,4 +138,23 @@ export const GraphicsCurrencies = styled.div`
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
+  width: 100%;
+  overflow: scroll;
+`;
+
+export const SwitchButton = styled.div`
+  font-size: 14px;
+  line-height: 14px;
+  height: 18px;
+  width: 60px;
+  padding: 2px 4px;
+  margin: 2px;
+  border-radius: 4px;
+  background: ${({ selectedPeriod, period }) =>
+    selectedPeriod === period && "#4b4d59"};
+`;
+
+export const AreaChartScroll = styled(AreaChart)`
+  overflow: scroll;
+  max-width: 100%;
 `;

@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import {
-  Wrapper,
-  StyledItem,
+  StyledGraphicsItem,
   ItemPart,
+  Icon,
+  Wrapper,
   GeneralLine,
   FadedLine,
-  Icon,
   PositiveText
 } from "../styled";
 
-class Item extends Component {
+class GraphicsItem extends Component {
   render() {
-    const { shortName, fullName, quantity, price } = this.props;
+    const { shortName, fullName, quantity, pathname } = this.props;
     const iconClassName = `icon icon-${shortName.toLowerCase()}`;
     return (
-      <StyledItem>
+      <StyledGraphicsItem pathname={pathname} shortName={shortName}>
         <ItemPart>
           <Icon>
             <span className={iconClassName} />
@@ -26,25 +26,13 @@ class Item extends Component {
             </GeneralLine>
             <FadedLine>
               <div>{fullName}</div>
-              <div>${price}</div>
+              <PositiveText>+37.5</PositiveText>
             </FadedLine>
           </Wrapper>
         </ItemPart>
-        <ItemPart>
-          <Wrapper>
-            <GeneralLine>
-              <div>BTC</div>
-              <PositiveText>+ 2.456</PositiveText>
-            </GeneralLine>
-            <FadedLine>
-              <div>Price</div>
-              <div>Profit / Loss</div>
-            </FadedLine>
-          </Wrapper>
-        </ItemPart>
-      </StyledItem>
+      </StyledGraphicsItem>
     );
   }
 }
 
-export default Item;
+export default GraphicsItem;

@@ -2,38 +2,66 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   WideContainer,
-  GraphicsCurrencies,
-  GraphicsItem,
   GeneralLine,
   Icon,
+  StyledLink,
+  AreaChartScroll,
   ItemPart,
   Wrapper,
-  IconBTC,
   FadedLine,
-  PositiveText,
-  StyledLink
+  PositiveText
 } from "../styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
+import PeriodSwitcher from "./PeriodSwitcher";
+import CurrencySwitcher from "./CurrencySwitcher";
+
+import { Area, CartesianGrid, XAxis, YAxis } from "recharts";
 
 class Graphics extends Component {
   state = {
-    graphData: []
+    graphData: [],
+    aggregatePeriod: "1"
   };
+
   componentDidMount() {
     this.setGraphics();
   }
 
-  setGraphics = async () => {
-    const url =
-      "https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=100&aggregate=1";
-    const response = await fetch(url).then(response => response.json());
+  componentDidUpdate(prevProps) {
+    if (prevProps.shortName !== this.props.shortName) {
+      this.setGraphics();
+    }
+  }
+
+  changePeriod = period => {
     this.setState({
-      graphData: response.Data
+      aggregatePeriod: period
+    });
+  };
+
+  setGraphics = async period => {
+    const { shortName } = this.props;
+    const aggregatePeriod = period || this.state.aggregatePeriod;
+    const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${shortName}&tsym=USD&limit=15&aggregate=${aggregatePeriod}`;
+    const response = await fetch(url).then(response => response.json());
+    const responseData = response.Data;
+    const mappedData = responseData.map(element => ({
+      ...element,
+      time: moment(element.time).format("HH:MM")
+    }));
+    this.setState({
+      graphData: mappedData
     });
   };
 
   render() {
+    const { graphData, aggregatePeriod } = this.state;
     const { shortName, fullName, quantity } = this.props;
+    const {
+      location: { pathname }
+    } = this.props;
+    const iconClassName = `icon icon-${shortName.toLowerCase()}`;
     return (
       <WideContainer>
         <GeneralLine>
@@ -43,25 +71,35 @@ class Graphics extends Component {
             </Icon>
           </StyledLink>
         </GeneralLine>
-        <GraphicsCurrencies>
-          <GraphicsItem>
-            <ItemPart>
-              <IconBTC>
-                <span className="icon icon-btc" />
-              </IconBTC>
-              <Wrapper>
-                <GeneralLine>
-                  <div>{shortName}</div>
-                  <div>{quantity}</div>
-                </GeneralLine>
-                <FadedLine>
-                  <div>{fullName}</div>
-                  <PositiveText>+37.5</PositiveText>
-                </FadedLine>
-              </Wrapper>
-            </ItemPart>
-          </GraphicsItem>
-        </GraphicsCurrencies>
+        <CurrencySwitcher pathname={pathname} />
+        <Wrapper>
+          <ItemPart>
+            <Icon>
+              <span className={iconClassName} />
+            </Icon>
+            <Wrapper>
+              <GeneralLine>
+                <div>{shortName}</div>
+                <div>{quantity}</div>
+              </GeneralLine>
+              <FadedLine>
+                <div>{fullName}</div>
+                <PositiveText>+ 2.456</PositiveText>
+              </FadedLine>
+            </Wrapper>
+          </ItemPart>
+        </Wrapper>
+        <PeriodSwitcher
+          aggregatePeriod={aggregatePeriod}
+          changePeriod={this.changePeriod}
+          setGraphics={this.setGraphics}
+        />
+        <AreaChartScroll width={500} height={500} data={graphData}>
+          <Area type="linear" dataKey="high" stroke="#9A7DD9" fill="#38364C" />
+          <CartesianGrid stroke="#4b4d59" />
+          <XAxis dataKey="time" />
+          <YAxis dataKey="high" />
+        </AreaChartScroll>
       </WideContainer>
     );
   }
