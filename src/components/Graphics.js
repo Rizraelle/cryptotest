@@ -41,9 +41,10 @@ class Graphics extends Component {
   };
 
   setGraphics = async period => {
+    const deployUrl = document.URL.includes("netlify") ? "_deployed" : "";
     const { shortName } = this.props;
     const aggregatePeriod = period || this.state.aggregatePeriod;
-    const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${shortName}&tsym=USD&limit=15&aggregate=${aggregatePeriod}`;
+    const url = `https://min-api.cryptocompare.com/data/histoday?fsym=${shortName}&tsym=USD&limit=15&aggregate=${aggregatePeriod}&extraParams=crypto_test${deployUrl}`;
     const response = await fetch(url).then(response => response.json());
     const responseData = response.Data;
     const mappedData = responseData.map(element => ({
